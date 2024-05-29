@@ -1,3 +1,4 @@
+from nltk.corpus import words
 import random, string
 import nltk_correct_txt, nltk_spell_check, rapidfuzz_correct_txt
 
@@ -37,22 +38,23 @@ def noisy(prompt: str, strength: float) -> str:
             noisy_prompt += perform_operation(char)
         else:
             noisy_prompt += char
-    return prompt
+    return noisy_prompt
 
 
 def test_general_english(input: str):
     print(f"Input text: {input}")
     print(f"Output from nltk_correct_txt.did_you_mean(): {nltk_correct_txt.did_you_mean(input)}")
-    print(f"Output from nltk_correct_txt.fuzzy_did_you_mean(): {nltk_correct_txt.fuzzy_did_you_mean(input)}")
+    print(f"Output from nltk_correct_txt.fuzzy_did_you_mean(): {nltk_correct_txt.fuzzy_did_you_mean(input, word_list)}")
     print(f"Output from nltk_spell_check.spell_check(): {nltk_spell_check.spell_check(input)}")
     print(f"Output from rapidfuzz_correct_txt.did_you_mean(): {rapidfuzz_correct_txt.did_you_mean(input)}")
-    print(f"Output from rapidfuzz_correct_txt.fuzzy_did_you_mean(): {rapidfuzz_correct_txt.fuzzy_did_you_mean(input)}")
+    print(f"Output from rapidfuzz_correct_txt.fuzzy_did_you_mean(): {rapidfuzz_correct_txt.fuzzy_did_you_mean(input, word_list)}")
     print("\n\n")
 
 
 if __name__ == "__main__":
     # ignore this line; dont change
     random.seed(100)
+    word_list = set(words.words())
     with open("general_english_prompts.txt", "r") as file:
         for prompt in file:
             if ADD_NOISE:
