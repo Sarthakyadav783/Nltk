@@ -3,8 +3,8 @@ from nltk.corpus import words
 from autocorrect import Speller
 from rapidfuzz import process, fuzz
 
-# Download NLTK word corpus
-nltk.download('words')
+# # Download NLTK word corpus
+# nltk.download('words')
 
 # Load the word list from NLTK
 word_list = set(words.words())
@@ -44,8 +44,13 @@ def fuzzy_did_you_mean(input_text, word_list):
     
     return corrected_text
 
-# Example usage
-input_text = "I lovve progrmming in Pythn"
-corrected_text_spell = did_you_mean(input_text)
-corrected_text_fuzzy = fuzzy_did_you_mean(corrected_text_spell, word_list)
-print(f"Did you mean: {corrected_text_fuzzy}?")
+
+if __name__ == "__main__":
+    # this way, this block of code is only executed when you explicity decide to run this file, and is not run
+    # when another file tries to access this one
+
+    # Example usage
+    input_text = "I lovve progrmming in Pythn"
+    corrected_text_spell = did_you_mean(input_text)
+    corrected_text_fuzzy = fuzzy_did_you_mean(corrected_text_spell, word_list)
+    print(f"Did you mean: {corrected_text_fuzzy}?")

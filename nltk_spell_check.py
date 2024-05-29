@@ -1,7 +1,7 @@
 import nltk
 from nltk.corpus import wordnet
 from nltk.tokenize import word_tokenize
-nltk.download('wordnet')
+# nltk.download('wordnet')
 
 def spell_check(text):
     # Tokenize the input text
@@ -36,8 +36,13 @@ def correct_spelling(word):
     else:
         return word
 
-# Example usage
-input_text = "Ths is an exmple of misspeled text."
-corrected_text = spell_check(input_text)
-print("Original Text:", input_text)
-print("Corrected Text:", corrected_text)
+
+if __name__ == "__main__":
+    # this way, this block of code is only executed when you explicity decide to run this file, and is not run
+    # when another file tries to access this one
+
+    # Example usage
+    input_text = "Ths is an exmple of misspeled text."
+    corrected_text = spell_check(input_text)
+    print("Original Text:", input_text)
+    print("Corrected Text:", corrected_text)

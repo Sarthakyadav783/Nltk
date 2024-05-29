@@ -1,16 +1,16 @@
 import nltk
 
-# Download necessary NLTK data files
-nltk.download('punkt')
-nltk.download('words')
+# # Download necessary NLTK data files
+# nltk.download('punkt')
+# nltk.download('words')
 
 from nltk.corpus import words
 from autocorrect import Speller
 from rapidfuzz import process, fuzz
 
-# Ensure necessary NLTK datasets are downloaded
-nltk.download('punkt')
-nltk.download('words')
+# # Ensure necessary NLTK datasets are downloaded
+# nltk.download('punkt')
+# nltk.download('words')
 
 # Load the word list from NLTK
 word_list = set(words.words())
@@ -54,13 +54,18 @@ def fuzzy_did_you_mean(input_text, word_list):
     
     return corrected_text
 
-# Example usagec
-input_text = "I lovve progrmming in Pythn"
 
-# Using autocorrect method
-corrected_text_autocorrect = did_you_mean(input_text)
-print(f"Autocorrect - Did you mean: {corrected_text_autocorrect}?")
+if __name__ == "__main__":
+    # this way, this block of code is only executed when you explicity decide to run this file, and is not run
+    # when another file tries to access this one
+    
+    # Example usagec
+    input_text = "I lovve progrmming in Pythn"
 
-# Using fuzzy matching method
-corrected_text_fuzzy = fuzzy_did_you_mean(input_text, word_list)
-print(f"Fuzzy Matching - Did you mean: {corrected_text_fuzzy}?")
+    # Using autocorrect method
+    corrected_text_autocorrect = did_you_mean(input_text)
+    print(f"Autocorrect - Did you mean: {corrected_text_autocorrect}?")
+
+    # Using fuzzy matching method
+    corrected_text_fuzzy = fuzzy_did_you_mean(input_text, word_list)
+    print(f"Fuzzy Matching - Did you mean: {corrected_text_fuzzy}?")
