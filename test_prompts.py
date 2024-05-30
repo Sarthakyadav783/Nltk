@@ -1,9 +1,7 @@
 from nltk.corpus import words
 import random
-import string
 import nltk_correct_txt
 import nltk_spell_check
-import rapidfuzz_correct_txt
 import add_noise
 
 
@@ -25,11 +23,6 @@ def test_general_english(input: str):
         f"Output from nltk_correct_txt.fuzzy_did_you_mean(): {nltk_correct_txt.fuzzy_did_you_mean(input, word_list)}")
     print(
         f"Output from nltk_spell_check.spell_check(): {nltk_spell_check.spell_check(input)}")
-    print(
-        f"Output from rapidfuzz_correct_txt.did_you_mean(): {rapidfuzz_correct_txt.did_you_mean(input)}")
-    print(
-        f"Output from rapidfuzz_correct_txt.fuzzy_did_you_mean(): {rapidfuzz_correct_txt.fuzzy_did_you_mean(input, word_list)}")
-    print("\n")
 
 
 if __name__ == "__main__":
