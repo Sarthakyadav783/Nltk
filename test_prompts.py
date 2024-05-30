@@ -4,51 +4,13 @@ import string
 import nltk_correct_txt
 import nltk_spell_check
 import rapidfuzz_correct_txt
+import add_noise
 
 
 # if you do not want to add noise to input then change this to 0
 ADD_NOISE = 1
 # should probably pick something between 0.1 and 0.15
 NOISE_STRENGTH = 0.13
-
-
-def perform_operation(character: str) -> str:
-    """ randomly choose between add, replace, or delete for the given character,
-    return resulting substring
-    """
-
-    insert = "insert"
-    replace = "replace"
-    delete = "delete"
-    choice = random.choice([insert, replace, delete])
-
-    if choice == delete:
-        return ""
-    else:
-        new_char = random.choice(string.ascii_letters)
-        if choice == replace:
-            return new_char
-        # choice is insert
-        return new_char + character
-
-
-def noisy(prompt: str, strength: float) -> str:
-    """
-    Given input string, add noise and return.
-    Strength must be between 0 and 1, where 
-    strength == 0 --> same prompt being returned
-    strength == 1 --> will perform a change on every character
-    """
-
-    noisy_prompt = ''
-
-    for char in prompt:
-        if char == " " or random.random() > strength:
-            noisy_prompt += char
-        else:
-            # perform change
-            noisy_prompt += perform_operation(char)
-    return noisy_prompt
 
 
 def test_general_english(input: str):
@@ -79,7 +41,7 @@ if __name__ == "__main__":
         for prompt in file:
             input = ""
             if ADD_NOISE:
-                input += noisy(prompt, NOISE_STRENGTH)
+                input += add_noise.noisy(prompt, NOISE_STRENGTH)
             else:
                 input += prompt
             test_general_english(input)
