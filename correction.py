@@ -1,10 +1,10 @@
 import pandas as pd
 from spellchecker import SpellChecker
 from fuzzywuzzy import process
-import nltk
+# import nltk
 from nltk import word_tokenize
 
-nltk.download('punkt')
+# nltk.download('punkt')
 
 
 df = pd.read_excel('ELECTION_2024.xlsx')
@@ -37,14 +37,14 @@ def correct_text(text, df, column_name='CANDINAME'):
     return " ".join(corrected_text)
 
 
-text1="Which constituancy is Lokenath Gowd Suragoni from? "
-text2 = "Which constituancy is Shashi Tharore compeeting from?"
+# text1="Which constituancy is Lokenath Gowd Suragoni from? "
+# text2 = "Which constituancy is Shashi Tharore compeeting from?"
 
-corrected_text1=correct_text(text1,df)
-corrected_text2 = correct_text(text2, df)
+# corrected_text1=correct_text(text1,df)
+# corrected_text2 = correct_text(text2, df)
 
-print("Original text 1:", text1)
-print("Corrected text 1:", corrected_text1)
+# print("Original text 1:", text1)
+# print("Corrected text 1:", corrected_text1)
 
-print("Original text 2:", text2)
-print("Corrected text 2:", corrected_text2)
+# print("Original text 2:", text2)
+# print("Corrected text 2:", corrected_text2)
