@@ -22,11 +22,11 @@ def perform_operation(character: str) -> str:
     delete = "delete"
     choice = random.choice([insert, replace, delete])
 
-    if choice == "delete":
+    if choice == delete:
         return ""
     else:
         new_char = random.choice(string.ascii_letters)
-        if choice == "replace":
+        if choice == replace:
             return new_char
         # choice is insert
         return new_char + character
