@@ -1,7 +1,7 @@
+# libraries
 from nltk.corpus import words
 import random
-import nltk_correct_txt
-import nltk_spell_check
+from nltk_spellchecking import nltk_correct_txt, nltk_spell_check
 import add_noise
 
 
