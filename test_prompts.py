@@ -3,7 +3,7 @@ from nltk.corpus import words
 import random
 import pandas as pd
 from nltk_spellchecking import nltk_correct_txt, nltk_spell_check
-import correction
+import nltk_spellchecking.correction as correction
 import add_noise
 
 
@@ -36,7 +36,6 @@ def whole_sentence_outputs(input: str):
     print(
         f"Output from correction.correct_text(): {correction.correct_text(input, df)}")
 
-    
 
 def run_test(file_name: str, test_type: str):
     """
