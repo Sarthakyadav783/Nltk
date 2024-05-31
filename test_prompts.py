@@ -3,7 +3,7 @@ from nltk.corpus import words
 import pandas as pd
 import name_spellcheck
 import nltk_correct_txt
-import handle_spellcheck
+import handler
 import add_noise
 
 
@@ -23,7 +23,7 @@ def english_outputs(input: str):
     print(
         f"Output from nltk_correct_txt.did_you_mean(): {nltk_correct_txt.did_you_mean(input)}")
     print(
-        f"Output from handle_spellcheck.handle_spellcheck(): {handle_spellcheck.handle_spellcheck(input)}")
+        f"Output from handle_spellcheck.handle_spellcheck(): {handler.handle_spellcheck(input)}")
 
 
 def name_outputs(input: str):

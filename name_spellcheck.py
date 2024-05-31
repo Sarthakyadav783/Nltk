@@ -2,6 +2,7 @@ from nltk.metrics import edit_distance
 import pandas as pd
 
 
+# try edlib library; supposed to be super fast. should implement and compare to this.
 def edit_dist_suggestion(original_name: str, include_transpositions=False) -> str:
     """
     take in all candidate names, compare edit_distance with

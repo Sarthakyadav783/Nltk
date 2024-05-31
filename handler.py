@@ -25,6 +25,8 @@ def final_check(prompt: str, suggestion: str) -> str:
     the spell checking model seems to add a few unnecessary tokens
     at the end that are completely false. add a check for this
     and return the real answer.
+
+    currently kinda slow; should think about faster solution?
     """
     prompt_tokens = prompt.split(" ")
     last_word = ""
@@ -105,7 +107,8 @@ def handle_spellcheck(input: str, transpositions=False) -> list:
     # # ================ SOLUTION 1 ========================
     # # extract name strings, call the spell check on them,
     # # then call the spell check on the whole string with the corrected names
-    # #  - not sure if the names will interfere when checking rest of sentence?
+    # # can't decide between the two spellchecking solutions for the sentence
+    # # will simply try both and pick better one each time for now
     correct_name_prompt = correct_name(
         prompt, ner_model.predict(prompt), transpositions)
 

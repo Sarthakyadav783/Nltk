@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from handle_spellcheck import handle_spellcheck
+from handler import handle_spellcheck
 
 
 app = FastAPI()
