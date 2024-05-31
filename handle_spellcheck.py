@@ -5,6 +5,7 @@ import string
 import re
 from nltk import edit_distance
 import name_spellcheck
+import nltk_correct_txt
 
 
 def load_models() -> list:
@@ -90,7 +91,7 @@ def correct_name(original: str, list_of_dicts: list, include_transpositions=Fals
 
 
 # ================ MAIN FUNCTION ========================
-def handle_spellcheck(input: str, transpositions=False):
+def handle_spellcheck(input: str, transpositions=False) -> list:
     """
     separate punctuation from letters, 
     load ner model and run inference, load pipeline
@@ -107,9 +108,14 @@ def handle_spellcheck(input: str, transpositions=False):
     # #  - not sure if the names will interfere when checking rest of sentence?
     correct_name_prompt = correct_name(
         prompt, ner_model.predict(prompt), transpositions)
+
     pipeline_output = spelling_pipeline(correct_name_prompt, max_length=2048)
-    suggestion = final_check(prompt, pipeline_output[0]['generated_text'])
-    return suggestion
+    pipeline_suggestion = final_check(
+        prompt, pipeline_output[0]['generated_text'])
+
+    nltk_suggestion = nltk_correct_txt.did_you_mean(correct_name_prompt)
+
+    return [pipeline_suggestion, nltk_suggestion]
 
     # # ================ SOLUTION 2 ========================
     # # extract name strings, call the spell check on them,
