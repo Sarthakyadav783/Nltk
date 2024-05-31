@@ -36,7 +36,7 @@ def correct_name(original: str, list_of_dicts: list, include_transpositions=Fals
             original_names.append(span_name)
 
             # corrected_name = func(span_name)
-            corrected_name = name_spellcheck.edit_dist_suggestion(
+            corrected_name = edit_dist_suggestion(
                 span_name, include_transpositions)
             correct_prompt = re.sub(" {old_name} ".format(
                 old_name=span_name), " {new_name} ".format(new_name=corrected_name), correct_prompt)

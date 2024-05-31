@@ -50,3 +50,8 @@ def punctuation_spacing(prompt: str) -> str:
             elif char in string.punctuation:
                 ans = re.sub(char, " {} ".format(char), ans)
     return ans
+
+
+def chooser(prompt: str, suggestion1: str, suggestion2: str) -> str:
+    """ Choose the best suggestion and return!"""
+    return
