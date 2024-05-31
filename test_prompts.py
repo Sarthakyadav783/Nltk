@@ -5,6 +5,7 @@ import pandas as pd
 from nltk_spellchecking import nltk_correct_txt, nltk_spell_check, correction
 
 from nltk_spellchecking import name_spellcheck
+import handle_spellcheck
 import add_noise
 
 
@@ -12,7 +13,9 @@ import add_noise
 ADD_NOISE = 1
 # should probably pick something between 0.1 and 0.15
 NOISE_STRENGTH = 0.13
-
+JUST_ENGLISH = "just english"
+JUST_NAME = "just name"
+BOTH = "whole sentence"
 
 def english_outputs(input: str):
     """
@@ -25,6 +28,7 @@ def english_outputs(input: str):
         f"Output from nltk_correct_txt.fuzzy_did_you_mean(): {nltk_correct_txt.fuzzy_did_you_mean(input, word_list)}")
     print(
         f"Output from nltk_spell_check.spell_check(): {nltk_spell_check.spell_check(input)}")
+    print(f"Output from handle_spellcheck.handle_spellcheck(): {handle_spellcheck.handle_spellcheck(input)}")
 
 
 def name_outputs(input: str):
@@ -61,11 +65,11 @@ def run_test(file_name: str, test_type: str, limit = -1):
             else:
                 input += prompt
 
-            if test_type == "just english":
+            if test_type == JUST_ENGLISH:
                 english_outputs(input)
-            elif test_type == "just name":
+            elif test_type == JUST_NAME:
                 name_outputs(input)
-            elif test_type == "everything":
+            elif test_type == BOTH:
                 whole_sentence_outputs(input)
             else:
                 raise ValueError
@@ -76,5 +80,5 @@ if __name__ == "__main__":
     word_list = set(words.words())
     df = pd.read_excel('nltk_spellchecking/ELECTION_2024.xlsx')
 
-    file_name = "candidate_names.txt"
-    run_test(file_name, "just name", 10)
+    file_name = "no_name_eng_prompts.txt"
+    run_test(file_name, JUST_ENGLISH, 10)
