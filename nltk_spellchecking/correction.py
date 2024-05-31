@@ -7,7 +7,7 @@ from nltk import word_tokenize
 # nltk.download('punkt')
 
 
-df = pd.read_excel('ELECTION_2024.xlsx')
+df = pd.read_excel("nltk_spellchecking/ELECTION_2024.xlsx")
 
 spell = SpellChecker()
 
