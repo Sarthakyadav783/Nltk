@@ -1,9 +1,7 @@
 from transformers import pipeline
 from span_marker import SpanMarkerModel
 import warnings
-import string
-import re
-from handler_helper import final_check, punctuation_spacing, correct_name
+from handler_helper import punctuation_spacing, correct_name, ask_spellcheck_pipeline
 from nltk_correct_txt import did_you_mean
 
 
@@ -17,15 +15,6 @@ def load_models() -> list:
     eng_spell_pipeline = pipeline(
         "text2text-generation", model="oliverguhr/spelling-correction-english-base")
     return ner_model, eng_spell_pipeline
-
-
-def ask_spellcheck_pipeline(pipe: pipeline, prompt: str) -> str:
-    """
-    ask spellcheck pipeline for suggestion and run final_check()
-    """
-    pipeline_output = pipe(prompt, max_length=2048)
-    pipe_suggestion = final_check(prompt, pipeline_output[0]['generated_text'])
-    return pipe_suggestion
 
 
 # ================ MAIN FUNCTION ========================

@@ -1,5 +1,6 @@
 import string
 import re
+from transformers import pipeline
 from nltk.metrics import edit_distance
 from name_spellcheck import edit_dist_suggestion
 
@@ -74,3 +75,12 @@ def correct_name(original: str, list_of_dicts: list, include_transpositions=Fals
             correct_prompt = re.sub(" {old_name} ".format(
                 old_name=span_name), " {new_name} ".format(new_name=corrected_name), correct_prompt)
     return correct_prompt
+
+
+def ask_spellcheck_pipeline(pipe: pipeline, prompt: str) -> str:
+    """
+    ask spellcheck pipeline for suggestion and run final_check()
+    """
+    pipeline_output = pipe(prompt, max_length=2048)
+    pipe_suggestion = final_check(prompt, pipeline_output[0]['generated_text'])
+    return pipe_suggestion
