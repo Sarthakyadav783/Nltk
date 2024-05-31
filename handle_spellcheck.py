@@ -31,15 +31,7 @@ def give_suggestion(original: str, list_of_dicts: list) -> str:
     # # then call the spell check on the whole string with the corrected names
     # #  - not sure if the names will interfere when checking rest of sentence?
 
-    # no_name_prompt = ""
-    # str_index, num_ppl = 0, 0
-    # names = []
-    # for dict in list_of_dicts:
-    #     if dict['label'] == 'PERSON':
-    #         names.append(dict['span'])
-    #         no_name_prompt += original[str_index:dict['char_start_index']] + "Person_{num}".format(num = num_ppl)
-    #         str_index = dict['char_end_index'] + 1
-    # no_name_prompt += original[str_index:]
+
 
     correct_name_prompt = original
     original_names = []
@@ -66,6 +58,5 @@ def give_suggestion(original: str, list_of_dicts: list) -> str:
     # # spell check name
     # # spell check rest of sentence?
 
-    # suggestion = ""
-    # return suggestion
-    return correct_name_prompt
+    suggestion = ""
+    return suggestion
