@@ -76,7 +76,7 @@ def run_test(file_name: str, test_type: str, limit = -1):
 
 
 if __name__ == "__main__":
-    random.seed(100)
+
     word_list = set(words.words())
     df = pd.read_excel('nltk_spellchecking/ELECTION_2024.xlsx')
 
