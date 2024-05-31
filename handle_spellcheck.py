@@ -1,23 +1,13 @@
 
 
-def process_input(original: str) -> str:
+def give_suggestion(original: str, list_of_dicts: list) -> str:
     """
-    Take in the original string,
-    identify name using model,
-    spell check name,
-    spell check whole sentence
+    Take in the list of dictionaries given by model
+    spell check name, whole sentence
     return suggestion
     """
-    # note: Are we guaranteed input will be in english? not sure how the model
-    # Will respond to, say, input in hindi 
-
-    # call span-marker-roberta-large-ontonotes5 model
-    # get list of dictionaries in return:
-    model = None
-    list_of_dicts = model(original)
     # example = [{'span': 'John', 'label': 'PERSON', 'score': 0.9854856729507446, 'char_start_index': 6, 'char_end_index': 10}, 
     #            {'span': '15', 'label': 'DATE', 'score': 0.9371686577796936, 'char_start_index': 22, 'char_end_index': 24}]
-    name_spell_checking = None
 
 
     # # ================ SOLUTION 1 ========================
@@ -34,7 +24,6 @@ def process_input(original: str) -> str:
     #         names_corrected_prompt += original[index:dict['char_start_index']]
     #         names_corrected_prompt += name_spell_checking(dict['span'])
     #         index = dict['char_end_index'] + 1
-
 
     # # ================ SOLUTION 2 ========================
     # # extract name strings, call the spell check on them,
