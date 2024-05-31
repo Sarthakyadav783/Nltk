@@ -3,6 +3,7 @@ from span_marker import SpanMarkerModel
 import warnings
 import string
 import re
+from nltk import edit_distance
 from nltk_spellchecking import name_spellcheck
 
 
@@ -16,6 +17,35 @@ def load_models() -> list:
     eng_spell_pipeline = pipeline(
         "text2text-generation", model="oliverguhr/spelling-correction-english-base")
     return ner_model, eng_spell_pipeline
+
+
+def final_check(prompt: str, suggestion: str) -> str:
+    """
+    the spell checking model seems to add a few unnecessary tokens
+    at the end that are completely false. add a check for this
+    and return the real answer.
+    """
+    prompt_tokens = prompt.split(" ")
+    last_word = ""
+    for i in range(len(prompt_tokens) - 1, -1, -1):
+        prompt_token = prompt_tokens[i]
+        if prompt_token not in string.punctuation and prompt_token not in string.whitespace:
+            last_word += prompt_token
+            break
+
+    suggestion_tokens = suggestion.split(" ")
+    n = len(suggestion_tokens)
+
+    # loop from the end and go backwards
+    # keep in mind that the spellcheck suggestion adds proper punctuation
+    for i in range(n-1, -1, -1):
+        # go backwards; see if token in prompt (some similarity threshold)
+        # once you find the first token that meets the threshold
+        # and is not punctuation, break the loop
+        token = suggestion_tokens[i]
+        if token not in string.punctuation and edit_distance(token, last_word) < 4:
+            return " ".join(suggestion_tokens[: i+1])
+    return ""
 
 
 def punctuation_spacing(prompt: str) -> str:
@@ -77,8 +107,9 @@ def handle_spellcheck(input: str, transpositions=False):
     # #  - not sure if the names will interfere when checking rest of sentence?
     correct_name_prompt = correct_name(
         prompt, ner_model.predict(prompt), transpositions)
-    suggestion = spelling_pipeline(correct_name_prompt, max_length=2048)
-    return suggestion[0]['generated_text']
+    pipeline_output = spelling_pipeline(correct_name_prompt, max_length=2048)
+    suggestion = final_check(prompt, pipeline_output[0]['generated_text'])
+    return suggestion
 
     # # ================ SOLUTION 2 ========================
     # # extract name strings, call the spell check on them,
