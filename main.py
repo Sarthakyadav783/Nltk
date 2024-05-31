@@ -4,6 +4,7 @@ from handle_spellcheck import handle_spellcheck
 
 app = FastAPI()
 
+
 @app.get("/")
 def string_correct(input: str):
     # note: Are we guaranteed input will be in english? not sure how the model
