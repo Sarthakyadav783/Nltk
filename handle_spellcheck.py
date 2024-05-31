@@ -48,7 +48,6 @@ def correct_name(original: str, list_of_dicts: list, include_transpositions=Fals
     for dict in list_of_dicts:
         span_name = dict['span']
         if dict['label'] == 'PERSON' and span_name not in original_names:
-            print(span_name)
             original_names.append(span_name)
 
             # corrected_name = func(span_name)
@@ -78,10 +77,10 @@ def handle_spellcheck(input: str, transpositions=False):
     correct_name_prompt = correct_name(
         prompt, ner_model.predict(prompt), transpositions)
     suggestion = spelling_pipeline(correct_name_prompt, max_length=2048)
-    return suggestion
+    return suggestion[0]['generated_text']
 
     # # ================ SOLUTION 2 ========================
     # # extract name strings, call the spell check on them,
     # # call spell check on the remaining sentence
     # # with placeholder values for the name.
-    # # If time, implement multithreading?
+    # # If time, implement multithreading? might not be worth the hassle though
