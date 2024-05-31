@@ -4,7 +4,7 @@ import warnings
 import string
 import re
 from nltk import edit_distance
-from nltk_spellchecking import name_spellcheck
+import name_spellcheck
 
 
 def load_models() -> list:

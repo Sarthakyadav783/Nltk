@@ -1,9 +1,9 @@
 # libraries
 from nltk.corpus import words
 import pandas as pd
-from nltk_spellchecking import nltk_correct_txt, correction
+from nltk_spellchecking import correction
 
-from nltk_spellchecking import name_spellcheck
+import name_spellcheck, nltk_correct_txt
 import handle_spellcheck
 import add_noise
 
