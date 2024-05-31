@@ -16,6 +16,7 @@ JUST_ENGLISH = "just english"
 JUST_NAME = "just name"
 BOTH = "whole sentence"
 
+
 def english_outputs(input: str):
     """
     Print the input prompt (only general English), and the output from various spellchecking modules 
@@ -24,10 +25,7 @@ def english_outputs(input: str):
     print(
         f"Output from nltk_correct_txt.did_you_mean(): {nltk_correct_txt.did_you_mean(input)}")
     print(
-        f"Output from nltk_correct_txt.fuzzy_did_you_mean(): {nltk_correct_txt.fuzzy_did_you_mean(input, word_list)}")
-    print(
-        f"Output from nltk_spell_check.spell_check(): {nltk_spell_check.spell_check(input)}")
-    print(f"Output from handle_spellcheck.handle_spellcheck(): {handle_spellcheck.handle_spellcheck(input)}")
+        f"Output from handle_spellcheck.handle_spellcheck(): {handle_spellcheck.handle_spellcheck(input)}")
 
 
 def name_outputs(input: str):
@@ -35,8 +33,8 @@ def name_outputs(input: str):
     Print the input prompt (only names), and the output from various spellchecking modules 
     """
     print(f"\nInput text: {input}")
-    print(f"Output from name_spellcheck.edit_dist_suggestion(): {name_spellcheck.edit_dist_suggestion(input)}")
-    
+    print(
+        f"Output from name_spellcheck.edit_dist_suggestion(): {name_spellcheck.edit_dist_suggestion(input)}")
 
 
 def whole_sentence_outputs(input: str):
@@ -48,7 +46,7 @@ def whole_sentence_outputs(input: str):
         f"Output from correction.correct_text(): {correction.correct_text(input, df)}")
 
 
-def run_test(file_name: str, test_type: str, limit = -1):
+def run_test(file_name: str, test_type: str, limit=-1):
     """
     file must be in same directory
     """
@@ -60,7 +58,8 @@ def run_test(file_name: str, test_type: str, limit = -1):
             i += 1
             input = ""
             if ADD_NOISE:
-                input += add_noise.noisy(prompt, NOISE_STRENGTH, transposition=True)
+                input += add_noise.noisy(prompt,
+                                         NOISE_STRENGTH, transposition=True)
             else:
                 input += prompt
 
