@@ -21,7 +21,7 @@ def punctuation_spacing(prompt: str) -> str:
     return ans
 
 
-def give_suggestion(original: str, list_of_dicts: list, include_transpositions = False) -> str:
+def give_suggestion(original: str, list_of_dicts: list, include_transpositions=False) -> str:
     """
     Take in the list of dictionaries given by model
     spell check name, whole sentence
@@ -41,13 +41,16 @@ def give_suggestion(original: str, list_of_dicts: list, include_transpositions =
     for dict in list_of_dicts:
         span_name = dict['span']
         if dict['label'] == 'PERSON' and span_name not in original_names:
+            print(span_name)
             original_names.append(span_name)
 
             # corrected_name = func(span_name)
-            corrected_name = name_spellcheck.edit_dist_suggestion(span_name, include_transpositions)
+            corrected_name = name_spellcheck.edit_dist_suggestion(
+                span_name, include_transpositions)
             correct_name_prompt = re.sub(" {old_name} ".format(
                 old_name=span_name), " {new_name} ".format(new_name=corrected_name), correct_name_prompt)
 
+    
     # # ================ SOLUTION 2 ========================
     # # extract name strings, call the spell check on them,
     # # call spell check on the remaining sentence
@@ -55,7 +58,6 @@ def give_suggestion(original: str, list_of_dicts: list, include_transpositions =
 
     # # If time, implement multithreading?
 
-    # # spell check name
     # # spell check rest of sentence?
 
     suggestion = correct_name_prompt

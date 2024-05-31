@@ -53,22 +53,23 @@ def noisy(prompt: str, strength: float, transposition=False) -> str:
             # so char should refer to previous one
             char = prompt[i - 1]
             prev_char_transposed = False
-            continue
+
         if char == " " or random.random() > strength:
             # no change
             noisy_prompt += char
         else:
             received_substring = ""
-            if i + 1 == n:
+            next_index = i + 1
+            if next_index == n:
                 # last char; transposition NOT ALLOWED
                 received_substring += perform_operation(
                     char, add_transposition=False)
             else:
                 received_substring += perform_operation(
-                    char + prompt[i + 1], add_transposition=transposition)
+                    char + prompt[next_index], add_transposition=transposition)
+                if received_substring == prompt[next_index] + char:
+                    prev_char_transposed = True
 
             noisy_prompt += received_substring
-            if len(received_substring) == 2:
-                prev_char_transposed = True
 
     return noisy_prompt
