@@ -3,8 +3,7 @@ from span_marker import SpanMarkerModel
 import warnings
 import string
 import re
-from handler_helper import final_check, punctuation_spacing
-from name_spellcheck import edit_dist_suggestion
+from handler_helper import final_check, punctuation_spacing, correct_name
 from nltk_correct_txt import did_you_mean
 
 
@@ -20,27 +19,13 @@ def load_models() -> list:
     return ner_model, eng_spell_pipeline
 
 
-def correct_name(original: str, list_of_dicts: list, include_transpositions=False) -> str:
+def ask_spellcheck_pipeline(pipe: pipeline, prompt: str) -> str:
     """
-    Take in the list of dictionaries given by model
-    spell check name, whole sentence
-    return suggestion
+    ask spellcheck pipeline for suggestion and run final_check()
     """
-
-    correct_prompt = original
-    original_names = []
-
-    for dict in list_of_dicts:
-        span_name = dict['span']
-        if dict['label'] == 'PERSON' and span_name not in original_names:
-            original_names.append(span_name)
-
-            # corrected_name = func(span_name)
-            corrected_name = edit_dist_suggestion(
-                span_name, include_transpositions)
-            correct_prompt = re.sub(" {old_name} ".format(
-                old_name=span_name), " {new_name} ".format(new_name=corrected_name), correct_prompt)
-    return correct_prompt
+    pipeline_output = pipe(prompt, max_length=2048)
+    pipe_suggestion = final_check(prompt, pipeline_output[0]['generated_text'])
+    return pipe_suggestion
 
 
 # ================ MAIN FUNCTION ========================
@@ -63,10 +48,7 @@ def handle_spellcheck(input: str, transpositions=False) -> list:
     correct_name_prompt = correct_name(
         prompt, ner_model.predict(prompt), transpositions)
 
-    pipeline_output = spelling_pipeline(correct_name_prompt, max_length=2048)
-    pipeline_suggestion = final_check(
-        prompt, pipeline_output[0]['generated_text'])
-
+    pipeline_suggestion = ask_spellcheck_pipeline(spelling_pipeline, correct_name_prompt)
     nltk_suggestion = did_you_mean(correct_name_prompt)
 
     return [pipeline_suggestion, nltk_suggestion]

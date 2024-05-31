@@ -1,6 +1,7 @@
 import string
 import re
 from nltk.metrics import edit_distance
+from name_spellcheck import edit_dist_suggestion
 
 
 def final_check(prompt: str, suggestion: str) -> str:
@@ -52,6 +53,24 @@ def punctuation_spacing(prompt: str) -> str:
     return ans
 
 
-def chooser(prompt: str, suggestion1: str, suggestion2: str) -> str:
-    """ Choose the best suggestion and return!"""
-    return
+def correct_name(original: str, list_of_dicts: list, include_transpositions=False) -> str:
+    """
+    Take in the list of dictionaries given by model
+    spell check name, whole sentence
+    return suggestion
+    """
+
+    correct_prompt = original
+    original_names = []
+
+    for dict in list_of_dicts:
+        span_name = dict['span']
+        if dict['label'] == 'PERSON' and span_name not in original_names:
+            original_names.append(span_name)
+
+            # corrected_name = func(span_name)
+            corrected_name = edit_dist_suggestion(
+                span_name, include_transpositions)
+            correct_prompt = re.sub(" {old_name} ".format(
+                old_name=span_name), " {new_name} ".format(new_name=corrected_name), correct_prompt)
+    return correct_prompt
