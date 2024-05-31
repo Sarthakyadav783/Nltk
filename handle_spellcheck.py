@@ -1,19 +1,22 @@
-import string, re
+import string
+import re
 
 
 def punctuation_spacing(prompt: str) -> str:
     """
     Add space around punctuation
     """
+    special_regex_chars = [".", "+", "*", "?", "^",
+                           "$", "(", ")", "[", "]", "{", "}", "|", "\\"]
     already_seen = []
     ans = prompt
     for char in prompt:
-        if char in string.punctuation and char not in already_seen:
+        if char not in already_seen:
             already_seen.append(char)
-            if char == ".":
-                ans = re.sub(r"\.", " . ", ans)
-            else:
-                ans = re.sub(char, " {c} ".format(c=char), ans)
+            if char in special_regex_chars:
+                ans = re.sub("\{}".format(char), " {} ".format(char), ans)
+            elif char in string.punctuation:
+                ans = re.sub(char, " {} ".format(char), ans)
     return ans
 
 
@@ -31,8 +34,6 @@ def give_suggestion(original: str, list_of_dicts: list) -> str:
     # # then call the spell check on the whole string with the corrected names
     # #  - not sure if the names will interfere when checking rest of sentence?
 
-
-
     correct_name_prompt = original
     original_names = []
 
@@ -41,7 +42,6 @@ def give_suggestion(original: str, list_of_dicts: list) -> str:
         if dict['label'] == 'PERSON' and span_name not in original_names:
             original_names.append(span_name)
 
-            
             # corrected_name = func(span_name)
             corrected_name = None
 
