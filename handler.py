@@ -37,7 +37,8 @@ def handle_spellcheck(input: str, transpositions=False) -> list:
     correct_name_prompt = correct_name(
         prompt, ner_model.predict(prompt), transpositions)
 
-    pipeline_suggestion = ask_spellcheck_pipeline(spelling_pipeline, correct_name_prompt)
+    pipeline_suggestion = ask_spellcheck_pipeline(
+        spelling_pipeline, correct_name_prompt)
     nltk_suggestion = did_you_mean(correct_name_prompt)
 
     return [pipeline_suggestion, nltk_suggestion]
