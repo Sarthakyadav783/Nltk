@@ -2,6 +2,7 @@ import string
 import re
 from nltk_spellchecking import name_spellcheck
 
+
 def punctuation_spacing(prompt: str) -> str:
     """
     Add space around punctuation

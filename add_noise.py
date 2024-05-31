@@ -1,7 +1,8 @@
-import random, string
+import random
+import string
 
 
-def perform_operation(characters: str, add_transposition = False) -> str:
+def perform_operation(characters: str, add_transposition=False) -> str:
     """ randomly choose between add, replace, delete, (or transposition, if allowed) 
     for the given character, return resulting substring,
     all operations other than transposition are performed on first char,
@@ -21,6 +22,7 @@ def perform_operation(characters: str, add_transposition = False) -> str:
     if choice == delete:
         return ""
     elif choice == transposition:
+        assert len(characters) == 2
         return characters[1] + characters[0]
     else:
         new_char = random.choice(string.ascii_letters)
@@ -30,7 +32,7 @@ def perform_operation(characters: str, add_transposition = False) -> str:
         return new_char + characters[0]
 
 
-def noisy(prompt: str, strength: float, transposition = False) -> str:
+def noisy(prompt: str, strength: float, transposition=False) -> str:
     """
     Given input string, add noise and return.
     Strength must be between 0 and 1, where 
@@ -43,20 +45,30 @@ def noisy(prompt: str, strength: float, transposition = False) -> str:
 
     noisy_prompt = ''
     prev_char_transposed = False
-    for i in range(len(prompt)):
+    n = len(prompt)
+    for i in range(n):
         char = prompt[i]
         if prev_char_transposed:
             # previous character swapped with current character;
             # so char should refer to previous one
-            char = prompt[i - 1] 
+            char = prompt[i - 1]
             prev_char_transposed = False
             continue
         if char == " " or random.random() > strength:
+            # no change
             noisy_prompt += char
         else:
-            # perform change
-            changed_chars = perform_operation(char, add_transposition = transposition)
-            noisy_prompt += changed_chars
-            if len(changed_chars) == 2:
+            received_substring = ""
+            if i + 1 == n:
+                # last char; transposition NOT ALLOWED
+                received_substring += perform_operation(
+                    char, add_transposition=False)
+            else:
+                received_substring += perform_operation(
+                    char + prompt[i + 1], add_transposition=transposition)
+
+            noisy_prompt += received_substring
+            if len(received_substring) == 2:
                 prev_char_transposed = True
+
     return noisy_prompt
