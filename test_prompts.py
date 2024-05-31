@@ -60,7 +60,7 @@ def run_test(file_name: str, test_type: str, limit = -1):
             i += 1
             input = ""
             if ADD_NOISE:
-                input += add_noise.noisy(prompt, NOISE_STRENGTH)
+                input += add_noise.noisy(prompt, NOISE_STRENGTH, transposition=True)
             else:
                 input += prompt
 
