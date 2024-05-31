@@ -2,7 +2,7 @@ from nltk.metrics import edit_distance
 import pandas as pd
 
 
-def edit_dist_suggestion(original_name: str, include_transpositions = False) -> str:
+def edit_dist_suggestion(original_name: str, include_transpositions=False) -> str:
     """
     take in all candidate names, compare edit_distance with
     given name, return closest one.
@@ -16,7 +16,8 @@ def edit_dist_suggestion(original_name: str, include_transpositions = False) -> 
     smallest_dist = len(original_name)
     closest_names = []
     for candidate in candidate_names:
-        distance = edit_distance(original_name, candidate, transpositions=include_transpositions)
+        distance = edit_distance(
+            original_name, candidate, transpositions=include_transpositions)
         if distance < smallest_dist:
             smallest_dist = distance
             closest_names = [candidate]
