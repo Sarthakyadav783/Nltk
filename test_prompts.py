@@ -1,6 +1,5 @@
 # libraries
 from nltk.corpus import words
-import random
 import pandas as pd
 from nltk_spellchecking import nltk_correct_txt, nltk_spell_check, correction
 
