@@ -1,5 +1,6 @@
 from transformers import pipeline
 from span_marker import SpanMarkerModel
+import warnings
 import string
 import re
 from nltk_spellchecking import name_spellcheck
@@ -67,9 +68,9 @@ def handle_spellcheck(input: str, transpositions=False):
     run spellcheck on full sentence
     return suggestion
     """
-    prompt = punctuation_spacing(input)
+    warnings.simplefilter(action='ignore', category=FutureWarning)
     ner_model, spelling_pipeline = load_models()
-
+    prompt = punctuation_spacing(input)
     # # ================ SOLUTION 1 ========================
     # # extract name strings, call the spell check on them,
     # # then call the spell check on the whole string with the corrected names
