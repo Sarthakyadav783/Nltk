@@ -1,4 +1,4 @@
-from handle_spellcheck import handle_spellcheck
+from handler import handle_spellcheck
 from add_noise import noisy
 import string
 import re
@@ -13,13 +13,13 @@ if __name__ == "__main__":
     # name = "J. V. Ramana"
     # input = add_noise.noisy(" How many votes did ", 0.15) + \
     #     add_noise.noisy(name, 0) + add_noise.noisy(",. have? ", 0.15)
-    prompts = ["What is the status of the election?",
+    prompts = ["What is the status of the election? Did Ashok win",
                "What is status of election?",
                "Give election status?",
                "Give me election status?",
                "Who are all the candidates from this constitutency?"]
     for prompt in prompts:
-        input = noisy(prompt, 0.15, True)
+        input = noisy(prompt, 0.13, True)
         output = handle_spellcheck(input, transpositions=True)
         print("Input: {x}".format(x=input))
         print("Output: {y}\n".format(y=output))

@@ -9,7 +9,7 @@ def edit_dist_suggestion(original_name: str, include_transpositions=False) -> st
     given name, return closest one.
     """
 
-    df = pd.read_excel("nltk_spellchecking/ELECTION_2024.xlsx")
+    df = pd.read_excel("other_py_files/ELECTION_2024.xlsx")
     candidate_names = df["CANDINAME"]
     if original_name in candidate_names:
         return original_name

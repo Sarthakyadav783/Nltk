@@ -15,6 +15,7 @@ def load_models() -> list:
     # eng_spell_pipeline = pipeline(
     #     "text2text-generation", model="oliverguhr/spelling-correction-english-base")
     # return ner_model, eng_spell_pipeline
+    return [ner_model]
 
 
 # ================ MAIN FUNCTION ========================

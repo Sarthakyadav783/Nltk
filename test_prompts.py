@@ -63,7 +63,7 @@ def run_test(file_name: str, test_type: str, limit=-1):
 if __name__ == "__main__":
 
     word_list = set(words.words())
-    df = pd.read_excel('nltk_spellchecking/ELECTION_2024.xlsx')
+    df = pd.read_excel('other_py_files/ELECTION_2024.xlsx')
 
     file_name = "name_eng_prompts.txt"
     run_test(file_name, ENGLISH)
